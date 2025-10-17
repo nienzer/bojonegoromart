@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BojonegoroMart — Marketplace Bojonegoro</title>
+<meta name="description" content="Marketplace modern untuk warga Bojonegoro — jual beli cepat, mudah, dan elegan.">
+<link rel="icon" href="assets/icons/favicon.ico">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2193b0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f8f9fa;color:#222}
+.header{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#2193b0,#6dd5ed);padding:12px 16px;color:#fff}
+.logo-img{height:56px}
+.logo-text{font-weight:800;font-size:20px;margin-left:8px}
+.search-input{margin-left:16px;padding:8px 12px;border-radius:24px;border:none;width:160px;transition:all .25s}
+.search-input:focus{width:320px;outline:none;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.header-icons{margin-left:auto;display:flex;gap:10px}
+.container{padding:18px}
+.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:860px){.products-grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:#fff;padding:12px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+</style>
+</head>
+<body>
+<header class="header">
+  <img src="assets/logo/logo.png" class="logo-img" alt="BojonegoroMart">
+  <div class="logo-text">BojonegoroMart</div>
+  <input class="search-input" placeholder="Cari produk, kategori, atau penjual...">
+  <div class="header-icons">💬 👤</div>
+</header>
+<main class="container">
+  <h2>Selamat Datang di BojonegoroMart</h2>
+  <p>Marketplace elegan untuk warga Bojonegoro.</p>
+  <div class="products-grid" id="products">
+  </div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyA6n_DqzHw64rhQvW_InZEVaUvNWPbCjsI",
+  authDomain: "bojonegoromart.firebaseapp.com",
+  projectId: "bojonegoromart",
+  storageBucket: "bojonegoromart.firebasestorage.app",
+  messagingSenderId: "180876798831",
+  appId: "1:180876798831:web:d6537082a3deda74bd969a",
+  measurementId: "G-SFL14J655S"
+};
+firebase.initializeApp(firebaseConfig);
+
+// demo products
+const products = [
+  {title:'iPhone 12 Pro 128GB Bekas',price:2500000, vendor:'Toko Gadget', emoji:'📱'},
+  {title:'Laptop Gaming ASUS ROG',price:7800000, vendor:'Tech Store', emoji:'💻'},
+  {title:'Kemeja Batik Premium',price:125000, vendor:'Fashion Hub', emoji:'👕'},
+  {title:'Sofa Minimalis 3 Dudukan',price:3500000, vendor:'Furniture ID', emoji:'🛋️'}
+];
+
+function currency(n){ return 'Rp ' + Number(n).toLocaleString('id-ID'); }
+function render(){
+  const el = document.getElementById('products');
+  el.innerHTML = '';
+  products.forEach(p=>{
+    const card = document.createElement('div'); card.className='card';
+    card.innerHTML = '<div style="font-size:48px">'+p.emoji+'</div><h3>'+p.title+'</h3><div style="color:#2193b0;font-weight:700">'+currency(p.price)+'</div><div style="font-size:13px;color:#666">Penjual: '+p.vendor+'</div>';
+    el.appendChild(card);
+  });
+}
+render();
+</script>
+</body>
+</html>
